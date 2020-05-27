@@ -4,7 +4,7 @@ pipeline {
         stage('Setup Environment') {
             steps {
                 sh '''
-                    sudo apt-get install python3-venv
+                    sudo apt-get install -y python3-venv
                     python3 -m venv venv
                     source venv/bin/activate
                 '''
