@@ -20,9 +20,10 @@ pipeline {
 
             }
         }
-        stage('Lint App') {
+        stage('Lint Dockerfile and app.py') {
             steps {
                 sh '''
+                    . venv/bin/activate
                     make lint
                 '''
             }
