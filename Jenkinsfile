@@ -1,16 +1,23 @@
 pipeline {
     agent any 
     stages {
+
+        stage('Install Dependencies'){
+            steps {
+                sh '''
+                    make install
+                    #install hadolint
+                    sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
+                    sudo chmod +x /bin/hadolint
+
+                '''
+
+            }
+        }
         stage('Lint App') {
             steps {
                 sh '''
-
-                #install hadolint
-                make install
-                sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
-                sudo chmod +x /bin/hadolint 
-                make lint
-                
+                    make lint
                 '''
             }
         }
