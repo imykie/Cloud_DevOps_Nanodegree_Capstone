@@ -1,7 +1,14 @@
 pipeline {
     agent any 
     stages {
-
+        stage('Setup Environment') {
+            steps {
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                '''
+            }
+        }
         stage('Install Dependencies'){
             steps {
                 sh '''
