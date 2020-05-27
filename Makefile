@@ -6,6 +6,10 @@ install:
 	pip install --upgrade pip && \
 	pip install -r requirements.txt
 
+lint:
+	hadolint --ignore DL3013 Dockerfile
+	pylint --disable=R,C,W1203 app.py
+
 validate-circleci:
     # See https://circleci.com/docs/2.0/local-cli/#processing-a-config
 	circleci config process .circleci/config.yml
@@ -14,8 +18,13 @@ run-circleci-local:
     # See https://circleci.com/docs/2.0/local-cli/#running-a-job
 	circleci local execute
 
-lint:
-	hadolint --ignore DL3013 Dockerfile
-	pylint --disable=R,C,W1203 app.py
+build:
+	docker build -t app .
+
+run:
+	docker run -p 8000:80 app
+
+push:
+	docker push imykel/devops-capstone
 
 all: install lint 
