@@ -1,6 +1,7 @@
 pipeline {
     environment {
         USER_CREDENTIALS = credentials('dockerhub-cred')
+        REGISTRY = imykel/devops-capstone
     }
     agent any 
     stages {
@@ -66,6 +67,31 @@ pipeline {
                         kubectl apply -f ./kubernetes/aws-auth.yml
                         '''
                 }
+            }
+        }
+
+        stage ('Deployment') {
+            steps {
+                withAWS(credentials: 'aws-cred', region: 'us-west-2') {
+                    sh '''
+                        kubectl set image deployments/capstone-app capstone-app=${REGISTRY}
+                        kubectl apply -f ./kubernetes/deployment.yml
+                        kubectl get nodes
+                        kubectl describe nodes
+                        kubectl get pods
+                        kubectl describe pods
+                        ./infrastructures/update-stack.sh capstone-nodes nodes.yml nodes-params.json
+                    '''
+                }
+            }
+        }
+
+        stage( 'Clean Docker') {
+            steps {
+                sh '''
+                    echo "Cleaning Docker"
+                    docker system prune
+                '''
             }
         }
     }
