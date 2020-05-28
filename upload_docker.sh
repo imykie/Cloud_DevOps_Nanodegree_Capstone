@@ -9,7 +9,7 @@ echo "Docker image path: $dockerpath"
 docker login -u $1 -p $2
 
 # Tag docker path
-docker tag app $dockerpath:latest
+docker tag capstone-app $dockerpath:latest
 
 # Push docker image to dockerhub registry
 docker push $dockerpath:latest

@@ -19,10 +19,10 @@ run-circleci-local:
 	circleci local execute
 
 build:
-	docker build -t app .
+	docker build -t capstone-app .
 
 run:
-	docker run -p 8000:80 app
+	docker run -p 8000:80 capstone-app
 
 push:
 	docker tag app imykel/devops-capstone
