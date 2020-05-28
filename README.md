@@ -3,6 +3,8 @@ This is the Capstone Project of Udacity Cloud DevOps Engineer Nanodegree Program
 
 [![CircleCI](https://circleci.com/gh/MichaelOlatunji/Cloud_DevOps_Nanodegree_Capstone.svg?style=svg)](https://circleci.com/gh/MichaelOlatunji/Cloud_DevOps_Nanodegree_Capstone)
 
+## This pipeline uses Rolling Deployment Stategy
+
 ## Run in Jenkins
 
 * Create an AWS ec2 instance
