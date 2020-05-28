@@ -77,6 +77,7 @@ pipeline {
                         kubectl apply -f ./kubernetes/deployment.yml
                         kubectl get pods
                         kubectl describe pods
+                        ./infrastructures/update-stack.sh capstone-nodes ./infrastructures/nodes.yml ./infrastructures/nodes-params.json
                         kubectl get nodes
                         kubectl describe nodes
                         kubectl get deployments

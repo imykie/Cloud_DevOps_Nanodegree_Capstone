@@ -10,5 +10,9 @@
     {
         "ParameterKey":"DesiredInstances",
         "ParameterValue": "2"
+    },
+    {
+        "ParameterKey":"ClusterName",
+        "ParameterValue": "CapstoneEKS-15iqwZ42Gu0e"
     }
 ]
