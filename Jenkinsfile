@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Create EKS NodeGroup') {
             steps {
-                sh "eksctl create nodegroup --config-file=infrastructures/nodegroup.yaml"
+                sh "eksctl create nodegroup --config-file=./infrastructures/nodegroup.yaml"
             }
         }
 
