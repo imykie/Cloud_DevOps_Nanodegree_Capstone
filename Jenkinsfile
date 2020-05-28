@@ -1,7 +1,7 @@
 pipeline {
     environment {
         USER_CREDENTIALS = credentials('dockerhub-cred')
-        REGISTRY = imykel/devops-capstone
+        REGISTRY = 'imykel/devops-capstone'
     }
     agent any 
     stages {
