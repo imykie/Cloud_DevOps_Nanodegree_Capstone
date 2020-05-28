@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "EnvironmentName",
+        "ParameterValue": "Capstone"
+    },
+    {
+        "ParameterKey": "SshKey",
+        "ParameterValue": "devops-nanodegree-keys"
+    },
+    {
+        "ParameterKey":"DesiredInstances",
+        "ParameterValue": "2"
+    }
+]
