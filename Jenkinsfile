@@ -40,7 +40,11 @@ pipeline {
         }
         stage('Push Image to DockerHub Registry') {
             steps {
-                sh './upload_docker.sh $USER_CREDENTIALS_USR $USER_CREDENTIALS_PSW '
+
+                sh '''
+                    sudo chmod +x ./upload_docker.sh
+                    ./upload_docker.sh $USER_CREDENTIALS_USR $USER_CREDENTIALS_PSW 
+                '''
             }
         }
     }
