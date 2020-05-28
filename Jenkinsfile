@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Push Image to DockerHub Registry') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub-cred', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh '''
                         docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                         make push
