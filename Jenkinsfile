@@ -77,16 +77,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Authenticate kubectl') {
-            steps {
-                withAWS(credentials: 'aws-cred', region: 'us-west-2') {
-                    sh '''
-                        kubectl apply -f ./kubernetes/aws-auth.yml
-                        '''
-                }
-            }
-        }
 
         stage ('Deployment') {
             steps {
