@@ -19,13 +19,13 @@ run-circleci-local:
 	circleci local execute
 
 build:
-	docker build -t imykel/devops-capstone .
+	docker build -t capstone-app .
 
 run:
-	docker run -p 8000:80 imykel/devops-capstone
+	docker run -p 8000:80 capstone-app
 
 push:
-	#docker tag app imykel/devops-capstone
+	docker tag capstone-app imykel/devops-capstone
 	docker push imykel/devops-capstone
 
 all: install lint 

@@ -48,23 +48,31 @@ pipeline {
                 '''
             }
         }
-        
+
+        stage('Create Cluster') {
+			steps {
+				withAWS(region:'us-west-2', credentials:'aws-cred') {
+					sh '''
+						eksctl create cluster \
+						--name capstone-imyke \
+						--nodegroup-name workers \
+						--node-type t2.micro \
+						--nodes 2 \
+						--nodes-min 2 \
+						--nodes-max 5 \
+						--region us-west-2 \
+						--node-ami auto
+					'''
+				}
+			}
+		}
+
         stage('Update kubectl config') {
             steps {
                 withAWS(credentials: 'aws-cred', region: 'us-west-2') {
                     sh '''
-                        aws eks --region us-west-2 update-kubeconfig --name CapstoneEKS-15iqwZ42Gu0e
+                        aws eks --region us-west-2 update-kubeconfig --name capstone-imyke
                         kubectl get svc
-                        '''
-                }
-            }
-        }
-
-        stage('Authenticate kubectl') {
-            steps {
-                withAWS(credentials: 'aws-cred', region: 'us-west-2') {
-                    sh '''
-                        kubectl apply -f ./kubernetes/aws-auth.yml
                         '''
                 }
             }
