@@ -56,10 +56,10 @@ pipeline {
 						eksctl create cluster \
 						--name capstone-imyke \
 						--nodegroup-name workers \
-						--node-type t2.micro \
+						--node-type t3.medium \
 						--nodes 2 \
 						--nodes-min 2 \
-						--nodes-max 5 \
+						--nodes-max 4 \
 						--region us-west-2 \
 						--node-ami auto
 					'''
@@ -77,6 +77,16 @@ pipeline {
                 }
             }
         }
+        
+        stage('Authenticate kubectl') {
+            steps {
+                withAWS(credentials: 'aws-cred', region: 'us-west-2') {
+                    sh '''
+                        kubectl apply -f ./kubernetes/aws-auth.yml
+                        '''
+                }
+            }
+        }
 
         stage ('Deployment') {
             steps {
@@ -89,6 +99,8 @@ pipeline {
                         kubectl describe nodes
                         kubectl get deployments
                         kubectl describe deployments
+                        kubectl apply -f ./kubernetes/service.yml
+                        kubectl get svc
                     '''
                 }
             }
