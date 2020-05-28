@@ -42,7 +42,7 @@ pipeline {
             steps {
 
                 sh '''
-                    sudo chmod +x ./upload_docker.sh
+                    sudo chmod +x upload_docker.sh
                     ./upload_docker.sh $USER_CREDENTIALS_USR $USER_CREDENTIALS_PSW 
                 '''
             }
