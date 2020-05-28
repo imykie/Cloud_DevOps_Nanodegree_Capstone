@@ -75,11 +75,11 @@ pipeline {
                 withAWS(credentials: 'aws-cred', region: 'us-west-2') {
                     sh '''
                         kubectl apply -f ./kubernetes/deployment.yml
-                        kubectl get nodes
-                        kubectl describe nodes
                         kubectl get pods
                         kubectl describe pods
-                        ./infrastructures/update-stack.sh capstone-nodes nodes.yml nodes-params.json
+                        ./infrastructures/update-stack.sh capstone-nodes ./infrastructures/nodes.yml ./infrastructures/nodes-params.json
+                        kubectl get nodes
+                        kubectl describe nodes
                         kubectl get deployments
                         kubectl describe deployments
                     '''
