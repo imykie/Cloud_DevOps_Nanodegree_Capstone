@@ -1,4 +1,4 @@
-#!usr/bin/sh
+#!/bin/bash
 
 # Docker image path
 dockerpath=imyke/devops-capstone
