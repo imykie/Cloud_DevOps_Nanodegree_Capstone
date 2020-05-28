@@ -48,12 +48,7 @@ pipeline {
                 '''
             }
         }
-        stage('Create EKS NodeGroup') {
-            steps {
-                sh "eksctl create nodegroup --config-file=./infrastructures/nodegroup.yaml"
-            }
-        }
-
+        
         stage('Update kubectl config') {
             steps {
                 withAWS(credentials: 'aws-cred', region: 'us-west-2') {
