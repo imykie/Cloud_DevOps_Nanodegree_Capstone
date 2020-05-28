@@ -32,7 +32,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                     sh 'make build'
+                }
             }
         }
         stage('Push Image to DockerHub Registry') {
