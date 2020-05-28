@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Docker image path
-dockerpath=imyke/devops-capstone
+dockerpath=imykel/devops-capstone
 
 echo "Docker image path: $dockerpath"
 
