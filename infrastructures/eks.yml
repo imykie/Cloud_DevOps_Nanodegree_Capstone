@@ -1,0 +1,32 @@
+Description: >
+    Capstone project for Cloud DevOps Engineering Nanodegree
+    Author: Michael Olatunji
+    Creating the EKS cluster.
+
+Parameters:
+  EnvironmentName:
+    Description: An Environment name that will be prefixed to resources
+    Type: String
+
+Resources:
+  CapstoneEKS:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Version: '1.13'
+      RoleArn: arn:aws:iam::358599436160:role/eks-role
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+        - Fn::ImportValue:
+            !Sub "${EnvironmentName}-SCG"
+        SubnetIds:
+            Fn::Split:
+                - ","
+                - Fn::ImportValue:
+                      Fn::Sub: ${EnvironmentName}-SBN-IDS
+                      
+Outputs:
+  EksId:
+    Description: The EKS id.
+    Value: !Ref CapstoneEKS
+    Export: 
+        Name: !Sub ${EnvironmentName}-EKS

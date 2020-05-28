@@ -1,6 +1,6 @@
 Description: >
     Capstone project for Cloud DevOps Engineering Nanodegree
-    Author - Michael Olatunji
+    Author: Michael Olatunji
     Creating the infrastructures for EKS cluster deployment.
 
 Parameters:
