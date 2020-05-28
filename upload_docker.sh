@@ -3,7 +3,7 @@
 # Docker image path
 dockerpath=imyke/devops-capstone
 
-echp "Docker image path: $dockerpath"
+echo "Docker image path: $dockerpath"
 
 # Authenticate docker
 docker login -u $1 -p $2
