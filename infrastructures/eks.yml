@@ -12,8 +12,8 @@ Resources:
   CapstoneEKS:
     Type: AWS::EKS::Cluster
     Properties:
-      Version: '1.13'
-      RoleArn: arn:aws:iam::358599436160:role/eks-role
+      Version: '1.15'
+      RoleArn: arn:aws:iam::658886372207:role/eksrole
       ResourcesVpcConfig:
         SecurityGroupIds:
         - Fn::ImportValue:
@@ -23,7 +23,7 @@ Resources:
                 - ","
                 - Fn::ImportValue:
                       Fn::Sub: ${EnvironmentName}-SBN-IDS
-                      
+
 Outputs:
   EksId:
     Description: The EKS id.

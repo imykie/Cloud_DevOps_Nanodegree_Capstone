@@ -13,7 +13,7 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
 
   DesiredInstances:
-    Description: Number of instances to be created
+    Description: Number of Instances to be created
     Type: Number
 
 Resources:
@@ -50,21 +50,29 @@ Resources:
         Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 8080
-          ToPort: 8080
+          FromPort: 0
+          ToPort: 65535
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
+          FromPort: 1025
+          ToPort: 65535
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
-          FromPort: 8000
-          ToPort: 8000
+          FromPort: 443
+          ToPort: 443
           CidrIp: 0.0.0.0/0
       SecurityGroupEgress:
         - IpProtocol: tcp
           FromPort: 0
           ToPort: 65535
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 1025
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
           CidrIp: 0.0.0.0/0
       Tags:
       - Key: 
@@ -153,3 +161,10 @@ Outputs:
     Value: !Ref NodesSecurityGroup
     Export:
       Name: !Sub ${EnvironmentName}-NSG
+
+  NodeGroup:
+    Description: The autoscaling group
+    Value: !Ref NodesAutoScalingGroup
+    Export:
+        Name: !Sub ${EnvironmentName}-NASG
+  
