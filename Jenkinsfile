@@ -43,7 +43,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh '''
-                        docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                        docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
                         make push
                      '''
                 }
