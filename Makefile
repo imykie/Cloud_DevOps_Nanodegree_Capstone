@@ -28,4 +28,4 @@ push:
 	docker tag capstone-app imykel/devops-capstone
 	docker push imykel/devops-capstone
 
-all: install lint 
+all: install lint
