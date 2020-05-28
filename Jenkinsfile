@@ -1,4 +1,7 @@
 pipeline {
+    environment {
+        dockerCredentials = 'docker-cred'
+    }
     agent any 
     stages {
         stage('Setup Environment') {
@@ -32,16 +35,15 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
-                    sh 'make build'
-                }
+                
+                sh 'make build'
             }
         }
         stage('Push Image to DockerHub Registry') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
-                    sh '''
-                        docker login -u $DOCKER_NAME -p $DOCKER_PASSWORD
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+	     	    sh '''  
+                        docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
                         make push
                     '''        
                 }
