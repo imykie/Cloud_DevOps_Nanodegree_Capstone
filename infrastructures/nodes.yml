@@ -16,10 +16,6 @@ Parameters:
     Description: Number of Instances to be created
     Type: Number
 
-  ClusterName:
-    Description: The cluster name provided when the cluster was created. If it is incorrect, nodes will not be able to join the cluster.
-    Type: String
-
 Resources:
   InstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -81,8 +77,10 @@ Resources:
       Tags:
       - Key: 
             !Sub 
-                - "kubernetes.io/cluster/${ClusterName}"
-                
+                - "kubernetes.io/cluster/${EksId}"
+                - EksId:
+                    Fn::ImportValue:
+                        !Sub "${EnvironmentName}-EKS"
         Value: 'owned'
 
   NodesAutoScalingGroup:
@@ -101,13 +99,17 @@ Resources:
       - Key: Name
         Value: 
             !Sub 
-                - "${ClusterName}-CapstoneNodesGroup-Node"
-                
+                - "${EksId}-CapstoneNodesGroup-Node"
+                - EksId:
+                    Fn::ImportValue:
+                        !Sub "${EnvironmentName}-EKS"
         PropagateAtLaunch: 'true'
       - Key: 
             !Sub 
-                - "kubernetes.io/cluster/${ClusterName}"
-
+                - "kubernetes.io/cluster/${EksId}"
+                - EksId:
+                    Fn::ImportValue:
+                        !Sub "${EnvironmentName}-EKS"
         Value: 'owned'
         PropagateAtLaunch: 'true'
     UpdatePolicy:
@@ -138,11 +140,14 @@ Resources:
             - |
                 #!/bin/bash
                 set -o xtrace
-                /etc/eks/bootstrap.sh ${ClusterName} ${BootstrapArguments}
+                /etc/eks/bootstrap.sh ${EksId}
                 /opt/aws/bin/cfn-signal --exit-code $? \
                          --stack  ${AWS::StackName} \
                          --resource NodesAutoScalingGroup  \
                          --region ${AWS::Region}
+            - EksId:
+                Fn::ImportValue:
+                    !Sub "${EnvironmentName}-EKS"
 
 Outputs:
   InstanceRole:

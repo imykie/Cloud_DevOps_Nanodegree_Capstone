@@ -48,6 +48,11 @@ pipeline {
                 '''
             }
         }
+        stage('Create EKS NodeGroup') {
+            steps {
+                sh "eksctl create nodegroup --config-file=infrastructures/nodegroup.yaml"
+            }
+        }
 
         stage('Update kubectl config') {
             steps {
@@ -77,7 +82,6 @@ pipeline {
                         kubectl apply -f ./kubernetes/deployment.yml
                         kubectl get pods
                         kubectl describe pods
-                        ./infrastructures/update-stack.sh capstone-nodes ./infrastructures/nodes.yml ./infrastructures/nodes-params.json
                         kubectl get nodes
                         kubectl describe nodes
                         kubectl get deployments
