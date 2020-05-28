@@ -25,7 +25,7 @@ run:
 	docker run -p 8000:80 app
 
 push:
-	docker tag app imyke/devops-capstone
+	docker tag app imykel/devops-capstone
 	docker push imykel/devops-capstone
 
 all: install lint 

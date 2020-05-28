@@ -47,5 +47,26 @@ pipeline {
                 '''
             }
         }
+
+        stage('Update kubectl config') {
+            steps {
+                withAWS(credentials: 'aws-cred', region: 'us-west-2') {
+                    sh '''
+                        aws eks --region us-west-2 update-kubeconfig --name CapstoneEKS-15iqwZ42Gu0e
+                        kubectl get svc
+                        '''
+                }
+            }
+        }
+
+        stage('Authenticate kubectl') {
+            steps {
+                withAWS(credentials: 'aws-cred', region: 'us-west-2') {
+                    sh '''
+                        kubectl apply -f ./kubernetes/aws-auth.yml
+                        '''
+                }
+            }
+        }
     }
 }
