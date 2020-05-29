@@ -54,7 +54,7 @@ pipeline {
 				withAWS(region:'us-west-2', credentials:'aws-cred') {
 					sh '''
 						eksctl create cluster \
-						--name capstone-imyke \
+						--name capstone-imykel \
 						--nodegroup-name workers \
 						--node-type t3.medium \
 						--nodes 2 \
@@ -71,7 +71,7 @@ pipeline {
             steps {
                 withAWS(credentials: 'aws-cred', region: 'us-west-2') {
                     sh '''
-                        aws eks --region us-west-2 update-kubeconfig --name capstone-imyke
+                        aws eks --region us-west-2 update-kubeconfig --name capstone-imykel
                         kubectl get svc
                         '''
                 }
