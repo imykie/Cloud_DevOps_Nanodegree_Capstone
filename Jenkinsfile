@@ -49,24 +49,6 @@ pipeline {
             }
         }
 
-        stage('Create Cluster') {
-			steps {
-				withAWS(region:'us-west-2', credentials:'aws-cred') {
-					sh '''
-						eksctl create cluster \
-						--name capstone-imykel \
-						--nodegroup-name workers \
-						--node-type t3.medium \
-						--nodes 2 \
-						--nodes-min 2 \
-						--nodes-max 4 \
-						--region us-west-2 \
-						--node-ami auto
-					'''
-				}
-			}
-		}
-
         stage('Update kubectl config') {
             steps {
                 withAWS(credentials: 'aws-cred', region: 'us-west-2') {
@@ -82,8 +64,6 @@ pipeline {
             steps {
                 withAWS(credentials: 'aws-cred', region: 'us-west-2') {
                     sh '''
-                        kubectl set image deployments/capstone-app capstone-app=${REGISTRY}:latest
-                        kubectl rollout status deployment.v1.apps/capstone-app
                         kubectl apply -f ./kubernetes/deployment.yml
                         kubectl get pods
                         kubectl describe pods
