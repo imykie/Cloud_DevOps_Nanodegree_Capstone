@@ -83,6 +83,7 @@ pipeline {
                 withAWS(credentials: 'aws-cred', region: 'us-west-2') {
                     sh '''
                         kubectl set image deployments/capstone-app capstone-app=${REGISTRY}:latest
+                        kubectl rollout status deployment.v1.apps/capstone-app
                         kubectl apply -f ./kubernetes/deployment.yml
                         kubectl get pods
                         kubectl describe pods
